@@ -1,76 +1,3 @@
-
-<!--APIkey:  17ffcab810ce4802bcbc41f3b318b7fa  -->
-
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API videojuegos</title>
-    <link rel="shortcut icon" href="./img/favicon.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="./styles.css">
-
-</head>
-<body>
-    
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -159,7 +86,7 @@ function buscarJuego(){
     $("#resultado").html('<p>Cargando...</p>')
 
     $.ajax({
-        url: `https://api.rawg.io/api/games?key=TU_API_KEY_AQUI&search=${nombre}`,
+        url: `https://api.rawg.io/api/games?key=17ffcab810ce4802bcbc41f3b318b7fa&search=${nombre}`,
         method: 'GET',
         success: function(data){
 

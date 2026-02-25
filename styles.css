@@ -1,0 +1,58 @@
+body{
+    font-family: 'Poppins', sans-serif;
+    background: #0f172a;
+    color: white;
+}
+
+h3{
+    font-family: 'Orbitron', sans-serif;
+}
+
+.card{
+    background: #1e293b;
+    border: none;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.card:hover{
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px rgba(0,0,0,.4);
+}
+
+.card img{
+    height: 200px;
+    object-fit: cover;
+}
+
+.btn-outline-light:hover{
+    background: #facc15;
+    color: #000;
+    border-color: #facc15;
+}
+
+.modal-content{
+    border-radius: 12px;
+}
+
+a{
+    color: #38bdf8;
+}
+
+/* NAVBAR GRADIENTE */
+.navbar-gradient{
+    background: linear-gradient(90deg, #1e293b, #0ea5e9);
+}
+
+.navbar-brand{
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+}
+
+/* pequeño glow sutil */
+.navbar-gradient{
+    box-shadow: 0 4px 20px rgba(14,165,233,.25);
+}
+
+.navbar-gradient{
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}

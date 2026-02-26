@@ -39,34 +39,39 @@
   
 </nav>
 
+
 <div class="container py-5">
 
-    <div class="text-center mb-4">
-        <h3>Buscador de Videojuegos</h3>
-        <p class="text-secondary">Busca información en tiempo real</p>
-    </div>
+    <!-- HERO BUSCADOR -->
+    <div id="heroBusqueda" class="hero-inicio">
 
-    <div class="row mt-3 justify-content-center">
-        <div class="col-md-6">
+        <div class="logo-grande">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>GameFinder</span>
+        </div>
+
+        <div class="buscador-box">
             <input 
                 type="text" 
                 id="NombreJuego" 
-                class="form-control" 
-                placeholder="Ingresa el nombre del juego"
+                class="form-control"
+                placeholder="Busca un videojuego..."
             >
-        </div>
-        <div class="col-md-2">
-            <button class="btn btn-warning w-100" onclick="buscarJuego()">
-                <i class="fa-solid fa-magnifying-glass"></i> Buscar
+
+            <button class="btn btn-warning" onclick="buscarJuego()">
+                Buscar
             </button>
         </div>
+
     </div>
 
+    <!-- RESULTADOS -->
     <div class="row my-5">
-        <div id="resultado"></div>
+        <div id="resultado" class="w-100"></div>
     </div>
 
 </div>
+
 
 <!-- MODAL -->
 <div class="modal fade" id="modalJuego">
@@ -86,8 +91,12 @@
 const API_KEY = "17ffcab810ce4802bcbc41f3b318b7fa"
 
 function buscarJuego(){
-    const nombre = $("#NombreJuego").val().trim()
 
+    document.getElementById("heroBusqueda").classList.add("compacto")
+
+
+    const nombre = $("#NombreJuego").val().trim()
+    
     if(!nombre){
         $("#resultado").html('<p class="text-danger">Escribe el nombre de un juego</p>')
         return
@@ -132,10 +141,12 @@ function buscarJuego(){
     })
 }
 
-$("#NombreJuego").on("keypress", function(e){
-    if(e.key === "Enter"){
-        buscarJuego()
-    }
+$(document).ready(function(){
+    $("#NombreJuego").on("keypress", function(e){
+        if(e.key === "Enter"){
+            buscarJuego()
+        }
+    })
 })
 
 function verDetalles(id){
@@ -168,7 +179,54 @@ function verDetalles(id){
 function volverInicio(){
     $("#NombreJuego").val("")
     $("#resultado").html("")
+    document.getElementById("heroBusqueda").classList.remove("compacto")
+    cargarPopulares()
+
 }
+
+
+function cargarPopulares(){
+
+    $("#resultado").html('<p class="text-center text-secondary">Cargando juegos populares...</p>')
+
+    $.ajax({
+        url: `https://api.rawg.io/api/games?key=${API_KEY}&page_size=9`,
+        method: 'GET',
+        success: function(data){
+
+            let html = '<h4 class="text-center mb-4 text-secondary">Juegos populares</h4><div class="row">'
+
+            data.results.forEach(juego => {
+                html += `
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 text-white">
+                            <img src="${juego.background_image || 'https://via.placeholder.com/400x250'}" class="card-img-top">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">${juego.name}</h5>
+                                <p>⭐ ${juego.rating}</p>
+                                <p>📅 ${juego.released || 'Desconocido'}</p>
+
+                                <button class="btn btn-outline-light mt-auto" onclick="verDetalles(${juego.id})">
+                                    Ver más
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `
+            })
+
+            html += '</div>'
+            $("#resultado").html(html)
+        }
+    })
+}
+
+$(document).ready(function(){
+    cargarPopulares()
+})
+
+
+
 </script>
 
 </body>

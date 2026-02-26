@@ -57,3 +57,45 @@ a{
 .navbar-gradient{
     border-bottom: 1px solid rgba(255,255,255,.08);
 }
+
+
+.hero-inicio{
+    min-height: 28vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 90px;
+    transition: all .4s ease;
+}
+
+.logo-grande{
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.buscador-box{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.hero-inicio.compacto{
+    min-height: auto;
+    align-items: stretch;
+    margin-top: 20px;
+}
+
+.hero-inicio.compacto .logo-grande{
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
+.hero-inicio.compacto .buscador-box{
+    max-width: 600px;
+}

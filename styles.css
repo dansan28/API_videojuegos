@@ -66,12 +66,13 @@ a{
 
 
 .hero-inicio{
-    min-height: 28vh;
+    min-height: clamp(160px, 20vh, 240px);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding-top: 90px;
+    padding-top: 30px;
+    margin-bottom: 10px;
     transition: all .4s ease;
 }
 
@@ -131,3 +132,31 @@ a{
     border-color: var(--color-principal-hover) !important;
     box-shadow: 0 0 0 0.2rem rgba(124,58,237,.4) !important;
 }
+
+
+.card-animada{
+    opacity: 0;
+    transform: translateY(15px);
+    animation: aparecerCard .4s ease forwards;
+}
+
+@keyframes aparecerCard{
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-animada{
+    opacity: 0;
+    transform: translateY(15px);
+    animation: aparecerCard .4s ease forwards;
+}
+
+.card-animada:nth-child(1){ animation-delay: .05s; }
+.card-animada:nth-child(2){ animation-delay: .1s; }
+.card-animada:nth-child(3){ animation-delay: .15s; }
+.card-animada:nth-child(4){ animation-delay: .2s; }
+.card-animada:nth-child(5){ animation-delay: .25s; }
+.card-animada:nth-child(6){ animation-delay: .3s; }
+

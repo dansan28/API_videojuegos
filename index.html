@@ -117,7 +117,7 @@ function buscarJuego(){
             data.results.forEach(juego => {
                 html += `
                     <div class="col-md-4 mb-4">
-                        <div class="card h-100 text-white">
+                        <div class="card h-100 text-white card-animada">
                             <img src="${juego.background_image || 'https://via.placeholder.com/400x250'}" class="card-img-top">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">${juego.name}</h5>
@@ -197,7 +197,7 @@ function cargarPopulares(){
             data.results.forEach(juego => {
                 html += `
                     <div class="col-md-4 mb-4">
-                        <div class="card h-100 text-white">
+                        <div class="card h-100 text-white card-animada">
                             <img src="${juego.background_image || 'https://via.placeholder.com/400x250'}" class="card-img-top">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">${juego.name}</h5>

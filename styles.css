@@ -160,3 +160,18 @@ a{
 .card-animada:nth-child(5){ animation-delay: .25s; }
 .card-animada:nth-child(6){ animation-delay: .3s; }
 
+
+.navbar-gradient{
+    background: linear-gradient(90deg, #4c1d95, var(--color-principal));
+    padding: 14px 0; 
+}
+
+.navbar-brand{
+    font-size: 1.4rem;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: .5px;
+}
+
+.navbar{
+    min-height: 64px;
+}

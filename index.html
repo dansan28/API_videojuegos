@@ -341,7 +341,7 @@ function mostrarJuegos(juegos, titulo){
     html += '</div>'
     $("#resultado").html(html)
 
-    juegos = juegos.filter(j => !esJuegoAdulto(j))
+    
 }
 
 
@@ -375,28 +375,6 @@ function obtenerFinDeAnio(){
     const fin = new Date(hoy.getFullYear(), 11, 31) 
     return fin.toISOString().split("T")[0]
 }
-
-function esJuegoAdulto(juego){
-
-    if(!juego) return false
-
-    const rating = juego.esrb_rating?.name?.toLowerCase() || ''
-    const slug   = juego.esrb_rating?.slug?.toLowerCase() || ''
-
-    if(rating.includes('adult') || slug.includes('adult')) return true
-
-    const nombre = juego.name?.toLowerCase() || ''
-    const slugJuego = juego.slug?.toLowerCase() || ''
-
-    const palabrasAdultas = [
-        'hentai','futanari','porn','sex','erotic','adult'
-    ]
-
-    return palabrasAdultas.some(p => 
-        nombre.includes(p) || slugJuego.includes(p)
-    )
-}
-
 
 
 </script>

@@ -118,6 +118,9 @@
 <script>
 const API_KEY = "17ffcab810ce4802bcbc41f3b318b7fa"
 
+
+
+
 function buscarJuego(){
 
     document.getElementById("heroBusqueda").classList.add("compacto")
@@ -199,10 +202,38 @@ function verDetalles(id){
             `
 
             $("#modalContenido").html(html)
+            cargarScreenshots(id)
             new bootstrap.Modal(document.getElementById('modalJuego')).show()
         }
     })
 }
+
+function cargarScreenshots(id){
+
+    $.ajax({
+        url: `https://api.rawg.io/api/games/${id}/screenshots?key=${API_KEY}`,
+        method: 'GET',
+        success: function(screens){
+
+            if(!screens.results || !screens.results.length) return
+
+            let screenshotsHTML = '<h5 class="mt-4">Screenshots</h5><div class="row">'
+
+            screens.results.slice(0,4).forEach(img => {
+                screenshotsHTML += `
+                    <div class="col-md-6 mb-3">
+                        <img src="${img.image}" class="img-fluid rounded shadow">
+                    </div>
+                `
+            })
+
+            screenshotsHTML += '</div>'
+
+            $("#modalContenido").append(screenshotsHTML)
+        }
+    })
+}
+
 
 function volverInicio(){
     $("#NombreJuego").val("")
@@ -218,7 +249,7 @@ function cargarPopulares(){
     $("#resultado").html('<p class="text-center text-secondary">Cargando juegos populares...</p>')
 
     $.ajax({
-        url: `https://api.rawg.io/api/games?key=${API_KEY}&page_size=9`,
+        url: `https://api.rawg.io/api/games?key=${API_KEY}&page_size=30`,
         method: 'GET',
         success: function(data){
 
@@ -249,18 +280,32 @@ function cargarPopulares(){
     })
 }
 
+
+
 function cargarProximos(){
 
-    const hoy = obtenerHoy()
-    const finAno = obtenerFinDeAno()
+    const hoy = new Date()
+    const inicio = hoy.toISOString().split("T")[0]
+
+    const finAno = new Date(hoy.getFullYear(), 11, 31)
+    const fin = finAno.toISOString().split("T")[0]
 
     $("#resultado").html('<p class="text-center text-secondary">Cargando próximos lanzamientos...</p>')
 
     $.ajax({
-        url: `https://api.rawg.io/api/games?key=${API_KEY}&ordering=released&dates=${hoy},${finAno}&page_size=9`,
+        url: `https://api.rawg.io/api/games?key=${API_KEY}&dates=${inicio},${fin}&ordering=released&page_size=30`,
         method: 'GET',
         success: function(data){
+
+            if(!data.results || !data.results.length){
+                $("#resultado").html("<p class='text-center'>No hay lanzamientos próximos</p>")
+                return
+            }
+
             mostrarJuegos(data.results, "Próximos lanzamientos")
+        },
+        error: function(){
+            $("#resultado").html("<p class='text-danger text-center'>Error al cargar próximos</p>")
         }
     })
 }
@@ -299,7 +344,10 @@ function mostrarJuegos(juegos, titulo){
 
     html += '</div>'
     $("#resultado").html(html)
+
+    juegos = juegos.filter(j => !esJuegoAdulto(j))
 }
+
 
 
 
@@ -310,12 +358,13 @@ function cargarRecientes(){
     $("#resultado").html('<p class="text-center text-secondary">Cargando juegos recientes...</p>')
 
     $.ajax({
-        url: `https://api.rawg.io/api/games?key=${API_KEY}&ordering=-released&dates=2000-01-01,${hoy}&page_size=9`,
+        url: `https://api.rawg.io/api/games?key=${API_KEY}&ordering=-released&dates=2000-01-01,${hoy}&page_size=30`,
         method: 'GET',
         success: function(data){
             mostrarJuegos(data.results, "Juegos recientes")
         }
     })
+   
 }
 
 function cargarMejorValorados(){
@@ -323,7 +372,7 @@ function cargarMejorValorados(){
     $("#resultado").html('<p class="text-center text-secondary">Cargando juegos mejor valorados...</p>')
 
     $.ajax({
-        url: `https://api.rawg.io/api/games?key=${API_KEY}&ordering=-metacritic&page_size=9`,
+        url: `https://api.rawg.io/api/games?key=${API_KEY}&ordering=-metacritic&page_size=30`,
         method: 'GET',
         success: function(data){
             mostrarJuegos(data.results, "Top juegos (Metacritic)")
@@ -339,11 +388,34 @@ function obtenerHoy(){
     return hoy.toISOString().split("T")[0]
 }
 
-function obtenerFinDeAno(){
+function obtenerFinDeAnio(){
     const hoy = new Date()
     const fin = new Date(hoy.getFullYear(), 11, 31) 
     return fin.toISOString().split("T")[0]
 }
+
+function esJuegoAdulto(juego){
+
+    if(!juego) return false
+
+    const rating = juego.esrb_rating?.name?.toLowerCase() || ''
+    const slug   = juego.esrb_rating?.slug?.toLowerCase() || ''
+
+    if(rating.includes('adult') || slug.includes('adult')) return true
+
+    const nombre = juego.name?.toLowerCase() || ''
+    const slugJuego = juego.slug?.toLowerCase() || ''
+
+    const palabrasAdultas = [
+        'hentai','futanari','porn','sex','erotic','adult'
+    ]
+
+    return palabrasAdultas.some(p => 
+        nombre.includes(p) || slugJuego.includes(p)
+    )
+}
+
+
 
 </script>
 
